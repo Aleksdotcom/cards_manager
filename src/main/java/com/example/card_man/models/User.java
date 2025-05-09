@@ -101,9 +101,9 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
-            "id = " + id + ", " +//TODO: refactor
-//                "firstName = " + firstName + ", " +
-//                "lastName = " + lastName + ", " +
+            "id = " + id + ", " +
+            "firstName = " + firstName + ", " +
+            "lastName = " + lastName + ", " +
             "email = " + email + ", " +
             "role = " + role + ")";
     }
