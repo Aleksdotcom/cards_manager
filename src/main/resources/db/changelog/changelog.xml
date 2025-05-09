@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!-- ChangeSets will go here
+    <include file="db/changelog/20250506_214929_changelog.yaml"/> -->
+
+    <changeSet id="create-tables" author="dev">
+        <sqlFile
+                path="sql/create-tables.sql"
+                relativeToChangelogFile="true"
+                splitStatements="true"
+                endDelimiter=";"
+                stripComments="true"/>
+    </changeSet>
+    <changeSet id="add-users" author="dev">
+        <sqlFile
+                path="sql/add-users.sql"
+                relativeToChangelogFile="true"
+                splitStatements="true"
+                endDelimiter=";"
+                stripComments="true"/>
+    </changeSet>
+</databaseChangeLog>

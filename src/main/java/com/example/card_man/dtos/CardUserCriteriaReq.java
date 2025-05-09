@@ -1,0 +1,30 @@
+package com.example.card_man.dtos;
+
+import com.example.card_man.models.CreditCard;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Pattern;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class CardUserCriteriaReq {
+  @Schema(
+      description = "Card status",
+      requiredMode = Schema.RequiredMode.NOT_REQUIRED
+  )
+  private CreditCard.CardStatus status;
+
+  @Schema(
+      description = "User's request to block the Card",
+      requiredMode = Schema.RequiredMode.NOT_REQUIRED
+  )
+  private Boolean toBlock;
+
+  @Schema(
+      description = "Card expiry date MM/yy",
+      requiredMode = Schema.RequiredMode.NOT_REQUIRED
+  )
+  @Pattern(regexp = "^(0[1-9]|1[0-2])/\\d{2}$")
+  private String expiryDate;
+}
