@@ -3,7 +3,6 @@ package com.example.card_man.dtos;
 import com.example.card_man.models.CreditCard;
 import com.example.card_man.utils.Mask;
 import com.example.card_man.utils.CardUtil;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +10,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 
 @Getter
 @Setter
@@ -37,7 +37,7 @@ public class CardResp {
     if (amountInCents == null) {
       return null;
     }
-    return new BigDecimal(amountInCents).movePointLeft(2).setScale(2, BigDecimal.ROUND_UNNECESSARY);
+    return new BigDecimal(amountInCents).movePointLeft(2).setScale(2, RoundingMode.UNNECESSARY);
   }
 
   public static CardResp toDto(CreditCard card) {

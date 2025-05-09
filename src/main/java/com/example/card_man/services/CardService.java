@@ -6,9 +6,7 @@ import com.example.card_man.models.CreditCard;
 import com.example.card_man.models.User;
 import com.example.card_man.repositories.CardRepository;
 import com.example.card_man.utils.CardUtil;
-import com.example.card_man.utils.CryptoUtils;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +21,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -107,7 +106,7 @@ public class CardService {
   public CardResp blockRequest(Long cardId, Authentication auth) {
     Long userId = extractUserId(auth);
     CreditCard card = findOne(cardId);
-    if (userId != card.getUserId()) {
+    if (!Objects.equals(userId, card.getUserId())) {
       throw new IllegalArgumentException("You can not block Card #" + cardId);
     }
     card.setToBlock(true);

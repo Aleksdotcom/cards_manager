@@ -1,6 +1,5 @@
 package com.example.card_man.utils.validators;
 
-import com.example.card_man.utils.validators.ExpirationDateValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

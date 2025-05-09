@@ -3,7 +3,6 @@ package com.example.card_man.controllers;
 import com.example.card_man.dtos.CardResp;
 import com.example.card_man.dtos.PageResponse;
 import com.example.card_man.models.CreditCard;
-import com.example.card_man.repositories.UserRepository;
 import com.example.card_man.services.CardService;
 import org.hamcrest.core.StringContains;
 import org.junit.jupiter.api.Test;

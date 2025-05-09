@@ -2,7 +2,6 @@ package com.example.card_man.dtos;
 
 import com.example.card_man.models.User;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
