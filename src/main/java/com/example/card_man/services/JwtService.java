@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
-import java.util.Map;
 
 @Service
 @Slf4j
@@ -32,6 +31,7 @@ public class JwtService {
                     .parseSignedClaims(token)
                     .getPayload();
         } catch (JwtException e) {
+            log.error(e.getMessage());
             throw e;
         }
     }

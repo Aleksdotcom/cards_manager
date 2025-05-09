@@ -12,21 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
   private final UserRepository repository;
-  public PageResponse<UserResp> allUsers(Pageable pageable) {
-
-    Page<User> fromDb = repository.findAll(pageable);
-    Page<UserResp> result = fromDb.map(UserResp::toDto);
-
-    return new PageResponse<>(result);
-  }
 
   public PageResponse<UserResp> findByCriteria(UserCriteriaReq dto, Pageable pageable) {
     String firstName = dto.getFirstName();
