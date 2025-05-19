@@ -46,7 +46,7 @@ public class UserService {
     String email = dto.getEmail();
     if (email != null && !email.equals(fromDb.getEmail()) ) {
       if (repository.existsByEmail(email)) {
-        throw new ConflictException("ERROR: Email already registered:" + dto.getEmail());
+        throw new ConflictException("ERROR: Email already registered: " + dto.getEmail());
       }
       fromDb.setEmail(email);
     }

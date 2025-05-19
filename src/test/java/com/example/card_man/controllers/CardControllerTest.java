@@ -4,16 +4,19 @@ import com.example.card_man.dtos.CardResp;
 import com.example.card_man.dtos.PageResponse;
 import com.example.card_man.models.CreditCard;
 import com.example.card_man.services.CardService;
+import org.hamcrest.Matchers;
 import org.hamcrest.core.StringContains;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -32,6 +35,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 class CardControllerTest {
+  @Value("${app.cors.origins}")
+  private String[] corsOrigins;
+
   @Autowired
   private MockMvc mockMvc;
 
@@ -105,5 +111,25 @@ class CardControllerTest {
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.jsonPath("$.totalElements").value(2))
         .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].expiryDate").value("01/26"));
+  }
+
+  @Test
+  public void testCorsHeaders() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.options("/swagger-ui/index.html")
+            .header(HttpHeaders.ORIGIN, corsOrigins[0])
+            .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "GET"))
+        .andDo(MockMvcResultHandlers.print())
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, corsOrigins[0]))
+        .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, Matchers.containsString("GET")));
+  }
+
+  @Test
+  public void testCorsHeadersBlockedForDisallowedOrigin() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.options("/swagger-ui/index.html")
+            .header(HttpHeaders.ORIGIN, "http://unauthorized-origin.com")
+            .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "GET"))
+        .andExpect(MockMvcResultMatchers.status().isForbidden())
+        .andExpect(MockMvcResultMatchers.header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN));
   }
 }
